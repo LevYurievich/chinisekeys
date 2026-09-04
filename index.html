@@ -1,0 +1,946 @@
+<title>部首 · Ключи иероглифов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --paper: #E7E9DE;
+    --paper-raised: #DCDFD1;
+    --paper-line: #C7CBB9;
+    --ink: #23262A;
+    --ink-soft: #63675C;
+    --ink-faint: #8B8F80;
+    --seal: #AE3326;
+    --seal-soft: #C9503F;
+    --brass: #A9853F;
+    --brass-fill: #E4D7AE;
+    --jade: #4C6E52;
+    --jade-fill: #C9DAC4;
+    --focus: #2F6FA8;
+    --shadow: rgba(35, 38, 42, 0.14);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1B1D19;
+      --paper-raised: #24261F;
+      --paper-line: #3A3D31;
+      --ink: #ECE7D8;
+      --ink-soft: #ABAE9A;
+      --ink-faint: #767A68;
+      --seal: #D9614A;
+      --seal-soft: #E58973;
+      --brass: #C7A25C;
+      --brass-fill: #3C351F;
+      --jade: #7FA36B;
+      --jade-fill: #253723;
+      --focus: #6FAEDD;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1B1D19;
+    --paper-raised: #24261F;
+    --paper-line: #3A3D31;
+    --ink: #ECE7D8;
+    --ink-soft: #ABAE9A;
+    --ink-faint: #767A68;
+    --seal: #D9614A;
+    --seal-soft: #E58973;
+    --brass: #C7A25C;
+    --brass-fill: #3C351F;
+    --jade: #7FA36B;
+    --jade-fill: #253723;
+    --focus: #6FAEDD;
+    --shadow: rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    min-height: 100vh;
+    padding: 28px 16px 64px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .scroll {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  header.top {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-family: "Noto Serif SC", serif;
+    font-weight: 700;
+    font-size: clamp(26px, 4.4vw, 34px);
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--seal);
+  }
+
+  .deck-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .deck-tabs .round-tab { font-size: 11.5px; padding: 7px 11px; }
+
+  /* progress grid: cells representing the active deck */
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    max-width: 320px;
+  }
+
+  .deck-cell {
+    aspect-ratio: 1;
+    border: 1px solid var(--paper-line);
+    background: var(--paper);
+    border-radius: 1px;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .deck-cell[data-state="studied"] {
+    background: var(--brass-fill);
+    border-color: var(--brass);
+  }
+
+  .deck-cell[data-state="ok"] {
+    background: var(--jade-fill);
+    border-color: var(--jade);
+  }
+
+  .deck-cell[data-state="weak"] {
+    background: var(--seal);
+    border-color: var(--seal);
+  }
+
+  .deck-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .deck-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--paper-line);
+    display: inline-block;
+    border-radius: 1px;
+  }
+
+  .swatch.studied { background: var(--brass-fill); border-color: var(--brass); }
+  .swatch.ok { background: var(--jade-fill); border-color: var(--jade); }
+  .swatch.weak { background: var(--seal); border-color: var(--seal); }
+
+  hr.brush {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--paper-line) 12%, var(--paper-line) 88%, transparent);
+    margin: 0;
+  }
+
+  /* screens */
+  .screen { display: none; flex-direction: column; gap: 20px; }
+  .screen.active { display: flex; }
+
+  .panel {
+    background: var(--paper-raised);
+    border: 1px solid var(--paper-line);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .panel p {
+    line-height: 1.65;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+
+  .panel p:last-child { margin-bottom: 0; }
+
+  .round-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .round-tab {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 9px 14px;
+    border: 1px solid var(--paper-line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: 1px;
+  }
+
+  .round-tab[data-unlocked="true"] {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+
+  .round-tab[aria-current="true"] {
+    background: var(--seal);
+    border-color: var(--seal);
+    color: #fff;
+  }
+
+  .round-tab:disabled { cursor: not-allowed; opacity: 0.55; }
+
+  button {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 1px;
+  }
+
+  button:focus-visible, .round-tab:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    background: var(--seal);
+    color: #fff;
+    border: 1px solid var(--seal);
+    padding: 13px 22px;
+    align-self: flex-start;
+  }
+
+  .btn-primary:hover { background: var(--seal-soft); border-color: var(--seal-soft); }
+  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--paper-line);
+    padding: 12px 18px;
+  }
+
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+
+  /* study / drill stage */
+  .stage-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .stage-head .score { color: var(--jade); }
+  .stage-head .score .miss { color: var(--seal); }
+
+  .card {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 540px) {
+    .card { grid-template-columns: 1fr; }
+  }
+
+  .tzg-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tzg {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 240px;
+    border: 1.5px solid var(--ink-soft);
+    background: var(--paper);
+  }
+
+  .tzg svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--paper-line); }
+  .tzg .ghost {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: clamp(64px, 22vw, 128px);
+    color: var(--ink);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .tzg .ghost.reveal-mode { color: var(--seal); opacity: 0.55; }
+  .tzg canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: crosshair;
+  }
+
+  .alt-forms {
+    font-family: "Noto Serif SC", serif;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  .pinyin {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .canvas-tools { display: flex; gap: 8px; }
+  .canvas-tools button {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 500;
+    font-size: 11px;
+    padding: 6px 10px;
+    background: transparent;
+    border: 1px solid var(--paper-line);
+    color: var(--ink-soft);
+  }
+
+  .canvas-tools button:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  .info-col { display: flex; flex-direction: column; gap: 14px; }
+
+  .meaning {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .mnemonic {
+    font-family: "Noto Serif SC", serif;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    padding-left: 14px;
+    border-left: 1px solid var(--seal);
+  }
+
+  .mnemonic::before { content: "\300C"; color: var(--seal); }
+  .mnemonic::after { content: "\300D"; color: var(--seal); }
+
+  .drill-prompt {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .grade-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .btn-grade {
+    padding: 12px 18px;
+    border: 1px solid;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 500;
+    font-size: 13px;
+    background: var(--paper);
+  }
+
+  .btn-grade.ok { border-color: var(--jade); color: var(--jade); }
+  .btn-grade.ok:hover { background: var(--jade-fill); }
+  .btn-grade.weak { border-color: var(--seal); color: var(--seal); }
+  .btn-grade.weak:hover { background: var(--seal); color: #fff; }
+
+  .stage-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .summary-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .chip {
+    font-family: "Noto Serif SC", serif;
+    font-size: 15px;
+    border: 1px solid var(--seal);
+    color: var(--seal);
+    padding: 4px 9px;
+    border-radius: 1px;
+  }
+
+  .stat-big {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 40px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  footer.note {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card { animation: rise 220ms ease-out; }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="scroll">
+
+  <header class="top">
+    <div class="title-row">
+      <h1>部首 · Ключи иероглифов</h1>
+    </div>
+    <div class="deck-tabs" id="deckTabs"></div>
+    <p class="subtitle" id="deckRangeLabel"></p>
+    <div class="deck-grid" id="deckGrid" aria-hidden="true"></div>
+    <div class="deck-legend">
+      <span><i class="swatch"></i>ещё не смотрели</span>
+      <span><i class="swatch studied"></i>изучен</span>
+      <span><i class="swatch ok"></i>пишу верно</span>
+      <span><i class="swatch weak"></i>нужно повторить</span>
+    </div>
+  </header>
+
+  <hr class="brush">
+
+  <!-- INTRO -->
+  <section class="screen active" id="screen-intro">
+    <div class="panel">
+      <p class="eyebrow">Как это работает</p>
+      <p><strong>1 тур — изучение.</strong> Карточки этого блока подряд: сам ключ, чтение, значение и ассоциация, которая объясняет форму — за что цепляться взглядом, чтобы запомнить написание. Пиньинь показан, но не главное — жду не звучание, а руку, которая помнит штрихи.</p>
+      <p><strong>Туры 2–4 — закрепление.</strong> Показываю только значение и подсказку-ассоциацию, вы пишете ключ по памяти на клетке для тренировки иероглифов (田字格), затем сверяете со призрачным контуром и сами отмечаете — получилось или нет.</p>
+      <p>Порядок в каждом туре перемешивается заново, так что заучивание позиции в списке не поможет — придётся вспоминать саму форму. Все 214 ключей разложены по вкладкам выше — переключайтесь между ними в любом порядке.</p>
+    </div>
+    <button class="btn-primary" id="btnStartRound1">Начать 1 тур — изучение →</button>
+  </section>
+
+  <!-- ROUND NAV (shown once round 1 finished at least once for this deck) -->
+  <div class="round-tabs" id="roundTabs" style="display:none;"></div>
+
+  <!-- STUDY SCREEN -->
+  <section class="screen" id="screen-study">
+    <div class="stage-head">
+      <span id="studyProgress">Карточка 1 / 30</span>
+      <span>Тур 1 · изучение</span>
+    </div>
+    <div class="card">
+      <div class="tzg-wrap">
+        <div class="tzg" id="studyTzg">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+          </svg>
+          <div class="ghost" id="studyChar"></div>
+          <canvas id="studyCanvas"></canvas>
+        </div>
+        <div class="pinyin" id="studyPinyin"></div>
+        <div class="canvas-tools">
+          <button id="studyClear" type="button">очистить обводку</button>
+        </div>
+      </div>
+      <div class="info-col">
+        <div class="alt-forms" id="studyAlt"></div>
+        <p class="meaning" id="studyMeaning"></p>
+        <p class="mnemonic" id="studyMnemonic"></p>
+      </div>
+    </div>
+    <div class="stage-nav">
+      <button class="btn-ghost" id="studyPrev">← назад</button>
+      <button class="btn-primary" id="studyNext">дальше →</button>
+    </div>
+  </section>
+
+  <!-- STUDY DONE -->
+  <section class="screen" id="screen-study-done">
+    <div class="panel">
+      <p class="eyebrow">1 тур завершён</p>
+      <p id="studyDoneText">Все ключи этого блока просмотрены. Теперь — туры на закрепление: значение и подсказка есть, а форму нужно вспомнить и написать самим.</p>
+    </div>
+    <button class="btn-primary" id="btnStartRound2">Начать 2 тур — закрепление →</button>
+  </section>
+
+  <!-- DRILL SCREEN -->
+  <section class="screen" id="screen-drill">
+    <div class="stage-head">
+      <span id="drillProgress">Ключ 1 / 30</span>
+      <span class="score" id="drillScore">верно 0 · <span class="miss">повторить 0</span></span>
+    </div>
+    <div class="panel">
+      <p class="drill-prompt" id="drillPrompt"></p>
+    </div>
+    <div class="card">
+      <div class="tzg-wrap">
+        <div class="tzg" id="drillTzg">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+          </svg>
+          <div class="ghost reveal-mode" id="drillGhost" style="display:none;"></div>
+          <canvas id="drillCanvas"></canvas>
+        </div>
+        <div class="pinyin" id="drillPinyin" style="visibility:hidden;"></div>
+        <div class="canvas-tools">
+          <button id="drillClear" type="button">очистить</button>
+          <button id="drillReveal" type="button">сравнить с оригиналом</button>
+        </div>
+      </div>
+      <div class="info-col">
+        <p style="font-size:13px; color:var(--ink-faint); margin:0;">Напишите ключ по памяти в клетке слева, затем нажмите «сравнить с оригиналом» и оцените себя честно.</p>
+        <div class="grade-row" id="gradeRow" style="display:none;">
+          <button class="btn-grade ok" id="gradeOk" type="button">✓ написал(а) верно</button>
+          <button class="btn-grade weak" id="gradeWeak" type="button">✗ нужно повторить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRILL DONE -->
+  <section class="screen" id="screen-drill-done">
+    <div class="panel">
+      <p class="eyebrow" id="drillDoneEyebrow">Тур завершён</p>
+      <p class="stat-big" id="drillDoneStat">0 / 30</p>
+      <p id="drillDoneText">написано верно с первого раза</p>
+      <div class="summary-list" id="weakList"></div>
+    </div>
+    <button class="btn-primary" id="btnNextRound">Продолжить →</button>
+  </section>
+
+  <!-- ALL DONE -->
+  <section class="screen" id="screen-all-done">
+    <div class="panel">
+      <p class="eyebrow">Все четыре тура пройдены</p>
+      <p id="allDoneText">Ключи этого блока закреплены. Прогресс по каждому сохранён выше — зелёный квадрат значит, что в последнем туре вы написали ключ верно по памяти, красный — что его стоит повторить в следующий раз.</p>
+      <p>Переключитесь на соседнюю вкладку сверху, чтобы перейти к следующему блоку ключей.</p>
+    </div>
+    <button class="btn-ghost" id="btnRestartAll">пройти туры закрепления заново</button>
+  </section>
+
+  <footer class="note">StudyChinese.ru · все 214 ключей китайских иероглифов, разбитые на 8 блоков по вкладкам</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var ALL_KEYS = [{"id": 1, "char": "一", "alt": [], "pinyin": "yī", "meaning": "единица; один", "mnemonic": "Всего одна горизонтальная черта — ровная линия горизонта. Один штрих — и хватит."}, {"id": 2, "char": "丨", "alt": [], "pinyin": "gǔn", "meaning": "вертикальная черта", "mnemonic": "Одна прямая палка, воткнутая в землю вертикально — как копьё или карандаш, поставленный торчком."}, {"id": 3, "char": "丶", "alt": [], "pinyin": "zhǔ", "meaning": "точка", "mnemonic": "Маленькая капля, упавшая на бумагу — короткий нажим кисти вправо-вниз."}, {"id": 4, "char": "丿", "alt": [], "pinyin": "piě", "meaning": "откидная влево", "mnemonic": "Кисть скользит по диагонали сверху вниз-влево, как срез косы или лыжный спуск влево."}, {"id": 5, "char": "乙", "alt": ["乚"], "pinyin": "yǐ", "meaning": "второй; извивающийся знак", "mnemonic": "Одна плавно изгибающаяся линия, как червячок, который не может решить, куда повернуть."}, {"id": 6, "char": "亅", "alt": [], "pinyin": "jué", "meaning": "вертикальная с крюком", "mnemonic": "Прямая черта, а в самом низу — короткий крючок, загнутый влево, как нижняя часть латинской буквы «J» или крюк вешалки, цепляющий что-то снизу."}, {"id": 7, "char": "二", "alt": [], "pinyin": "èr", "meaning": "два", "mnemonic": "Две горизонтальные черты одна над другой — просто «два»."}, {"id": 8, "char": "亠", "alt": [], "pinyin": "tóu", "meaning": "крышка сверху; голова", "mnemonic": "Горизонтальная черта с точкой над ней — шляпа-цилиндр на голове."}, {"id": 9, "char": "人", "alt": ["亻"], "pinyin": "rén", "meaning": "человек", "mnemonic": "Две расходящиеся черты — ноги идущего человека. Слева от других ключей (亻) превращается в стройный столбик с одной «рукой»."}, {"id": 10, "char": "儿", "alt": [], "pinyin": "ér", "meaning": "идущий человек; ножки", "mnemonic": "Похоже на ноги бегущего человека, изогнутые в шаге — младший, семенящий следом."}, {"id": 11, "char": "入", "alt": [], "pinyin": "rù", "meaning": "входить", "mnemonic": "Похож на 人, но черты пересекаются острее — человек наклонился, чтобы протиснуться в низкую дверь."}, {"id": 12, "char": "八", "alt": [], "pinyin": "bā", "meaning": "восемь; делить", "mnemonic": "Две черты расходятся в разные стороны, будто что-то разделили пополам — раз-два, и пополам."}, {"id": 13, "char": "冂", "alt": [], "pinyin": "jiōng", "meaning": "граница; ограда", "mnemonic": "Три стороны прямоугольника без дна — ворота на краю поля, отмечающие границу."}, {"id": 14, "char": "冖", "alt": [], "pinyin": "mì", "meaning": "крышка", "mnemonic": "Горизонтальная черта с загнутыми вниз краями — крышка, плотно накрывшая кастрюлю."}, {"id": 15, "char": "冫", "alt": [], "pinyin": "bīng", "meaning": "лёд", "mnemonic": "Два коротких косых штриха — трещины на замёрзшей луже."}, {"id": 16, "char": "几", "alt": [], "pinyin": "jī", "meaning": "столик; несколько", "mnemonic": "Низкий столик на изогнутых ножках — такая подставка держала свитки."}, {"id": 17, "char": "凵", "alt": [], "pinyin": "kǎn", "meaning": "яма", "mnemonic": "Открытая сверху рамка — вырытая в земле яма или канава."}, {"id": 18, "char": "刀", "alt": ["刂"], "pinyin": "dāo", "meaning": "нож", "mnemonic": "Изогнутая линия с крючком на конце — лезвие серпа. Сбоку от других ключей сжимается в узкий 刂 — «нож стоя»."}, {"id": 19, "char": "力", "alt": [], "pinyin": "lì", "meaning": "сила", "mnemonic": "Согнутая линия похожа на напряжённый бицепс — рука, показывающая мускул."}, {"id": 20, "char": "勹", "alt": [], "pinyin": "bāo", "meaning": "обёртывать", "mnemonic": "Одна изогнутая линия обхватывает пространство внутри — рука, оборачивающая подарок."}, {"id": 21, "char": "匕", "alt": [], "pinyin": "bǐ", "meaning": "черпак; кинжал", "mnemonic": "Короткий крючковатый штрих — маленький нож или ложка-черпак, зачерпывающая рис."}, {"id": 22, "char": "匚", "alt": [], "pinyin": "fāng", "meaning": "ящик; короб", "mnemonic": "Три стороны прямоугольника, открытые справа — ящик, повёрнутый к нам открытой стороной."}, {"id": 23, "char": "匸", "alt": [], "pinyin": "xì", "meaning": "прятать", "mnemonic": "Похож на 匚, только шире и ниже — широкий тайник, куда что-то прячут."}, {"id": 24, "char": "十", "alt": [], "pinyin": "shí", "meaning": "десять", "mnemonic": "Крест из двух черт — десять пальцев, сложенных крест-накрест."}, {"id": 25, "char": "卜", "alt": [], "pinyin": "bǔ", "meaning": "гадать", "mnemonic": "Вертикальная черта с маленькой чёрточкой сбоку — трещина на панцире черепахи при гадании на огне."}, {"id": 26, "char": "卩", "alt": ["⺋"], "pinyin": "jié", "meaning": "печать; власть", "mnemonic": "Согнутая фигура человека, преклонившего колено и протягивающего знак власти."}, {"id": 27, "char": "厂", "alt": [], "pinyin": "hǎn", "meaning": "обрыв; утёс", "mnemonic": "Горизонтальная черта нависает над вертикальной — скальный козырёк над обрывом."}, {"id": 28, "char": "厶", "alt": [], "pinyin": "sī", "meaning": "частный; личный", "mnemonic": "Маленький завиток, спрятанный в уголке — то, что человек держит только при себе."}, {"id": 29, "char": "又", "alt": [], "pinyin": "yòu", "meaning": "правая рука; опять", "mnemonic": "Черты расходятся, как растопыренные пальцы — рука, которая снова и снова что-то протягивает."}, {"id": 30, "char": "口", "alt": [], "pinyin": "kǒu", "meaning": "рот", "mnemonic": "Простой квадратик — широко открытый рот."}, {"id": 31, "char": "囗", "alt": [], "pinyin": "wéi", "meaning": "окружать; ограда", "mnemonic": "Пустой квадрат-рамка — стена, огораживающая территорию со всех четырёх сторон."}, {"id": 32, "char": "土", "alt": [], "pinyin": "tǔ", "meaning": "земля", "mnemonic": "Крест на подставке: горизонталь — уровень земли, вертикаль протыкает её насквозь, как столбик, воткнутый в почву."}, {"id": 33, "char": "士", "alt": [], "pinyin": "shì", "meaning": "воин", "mnemonic": "Похож на 土, но верхняя черта короче нижней — плечи воина уже, чем твёрдая опора земли под ногами."}, {"id": 34, "char": "夂", "alt": [], "pinyin": "zhǐ", "meaning": "шагать вперёд; продвигаться", "mnemonic": "Изогнутая нога, делающая шаг сверху вниз-вправо — спуск по ступенькам."}, {"id": 35, "char": "夊", "alt": [], "pinyin": "suī", "meaning": "медленно идти; волочить ноги", "mnemonic": "Похож на 夂, но с длинным волочащимся хвостом внизу — устал, тащит ноги."}, {"id": 36, "char": "夕", "alt": [], "pinyin": "xī", "meaning": "вечер", "mnemonic": "Полумесяц с чёрточкой внутри — серп луны, встающий на закате."}, {"id": 37, "char": "大", "alt": [], "pinyin": "dà", "meaning": "большой", "mnemonic": "Человечек с широко раскинутыми руками — показывает «вот такой большой»."}, {"id": 38, "char": "女", "alt": [], "pinyin": "nǚ", "meaning": "женщина", "mnemonic": "Плавные скрещенные изогнутые линии — фигура, сидящая со сложенными коленями."}, {"id": 39, "char": "子", "alt": [], "pinyin": "zǐ", "meaning": "ребёнок; сын", "mnemonic": "Голова-кружок и раскинутые ручки-пелёнка снизу — спелёнутый младенец."}, {"id": 40, "char": "宀", "alt": [], "pinyin": "mián", "meaning": "крыша с точкой; крыша", "mnemonic": "Точка-конёк и два ската по бокам — треугольная крыша дома, вид спереди."}, {"id": 41, "char": "寸", "alt": [], "pinyin": "cùn", "meaning": "вершок", "mnemonic": "Черта-запястье и точка-ноготь — рука, отмеряющая маленькое расстояние."}, {"id": 42, "char": "小", "alt": ["⺌", "⺍"], "pinyin": "xiǎo", "meaning": "маленький", "mnemonic": "Короткая вертикаль и две малюсенькие точки по бокам — что-то совсем крошечное."}, {"id": 43, "char": "尢", "alt": ["尣"], "pinyin": "wāng", "meaning": "хромой", "mnemonic": "Похож на 大, но одна нога подогнута — фигура человека с повреждённой ногой."}, {"id": 44, "char": "尸", "alt": [], "pinyin": "shī", "meaning": "труп", "mnemonic": "Свисающая, обмякшая фигура без опоры — тело, лежащее плашмя."}, {"id": 45, "char": "屮", "alt": [], "pinyin": "chè", "meaning": "росток", "mnemonic": "Вертикаль с двумя поднятыми вверх листиками — росток, только что пробившийся из земли."}, {"id": 46, "char": "山", "alt": [], "pinyin": "shān", "meaning": "гора", "mnemonic": "Три пика подряд, средний выше — силуэт горной гряды."}, {"id": 47, "char": "巛", "alt": ["川", "巜"], "pinyin": "chuān", "meaning": "поток; река", "mnemonic": "Три параллельные волнистые линии — течение реки, видное сверху."}, {"id": 48, "char": "工", "alt": [], "pinyin": "gōng", "meaning": "работа", "mnemonic": "Две горизонтали, соединённые вертикальной стойкой — строительный уровень."}, {"id": 49, "char": "己", "alt": ["已", "巳"], "pinyin": "jǐ", "meaning": "сам", "mnemonic": "Изогнутая линия, заворачивающая внутрь себя, будто указывает сама на себя."}, {"id": 50, "char": "巾", "alt": [], "pinyin": "jīn", "meaning": "полотенце; салфетка", "mnemonic": "Вертикаль-держатель и свисающая с крючка ткань — полотенце на вешалке."}, {"id": 51, "char": "干", "alt": [], "pinyin": "gān", "meaning": "щит; вмешиваться", "mnemonic": "Вертикаль, пронзающая две горизонтали — древко с перекладинами, как древний щит-рогатина."}, {"id": 52, "char": "幺", "alt": [], "pinyin": "yāo", "meaning": "незрелый; младший", "mnemonic": "Маленький скрученный узелок нити — тонкая, ещё не выросшая нить."}, {"id": 53, "char": "广", "alt": [], "pinyin": "yǎn", "meaning": "навес", "mnemonic": "Точка-крыша и одна скошенная стена — навес, прислонённый только с одной стороны."}, {"id": 54, "char": "廴", "alt": [], "pinyin": "yǐn", "meaning": "двигаться вперед; тащить", "mnemonic": "Длинная волочащаяся линия с изгибом внизу — след, тянущийся за уходящим человеком."}, {"id": 55, "char": "廾", "alt": [], "pinyin": "gǒng", "meaning": "соединить руки", "mnemonic": "Две вертикали, соединённые снизу горизонталью — две руки, сомкнутые вместе в поклоне."}, {"id": 56, "char": "弋", "alt": [], "pinyin": "yì", "meaning": "стрелять из лука", "mnemonic": "Вертикаль с чертой-стрелой наискосок — копьё, готовое к броску."}, {"id": 57, "char": "弓", "alt": [], "pinyin": "gōng", "meaning": "лук", "mnemonic": "Изогнутая тетива лука — сам лук в форме натянутой дуги."}, {"id": 58, "char": "彐", "alt": ["彑"], "pinyin": "jì", "meaning": "голова свиньи", "mnemonic": "Три горизонтальные линии, замкнутые слева, — рыло свиньи сбоку."}, {"id": 59, "char": "彡", "alt": [], "pinyin": "shān", "meaning": "перья; длинная шерсть", "mnemonic": "Три коротких параллельных штриха по диагонали — три волоска, обозначающих пушистость."}, {"id": 60, "char": "彳", "alt": [], "pinyin": "chì", "meaning": "шаг (левой ногой)", "mnemonic": "Две короткие диагональные черты друг под другом — след двух шагов левой ногой."}, {"id": 61, "char": "心", "alt": ["忄", "⺗"], "pinyin": "xīn", "meaning": "сердце", "mnemonic": "Изогнутая чаша с тремя точками наверху — сердце с бьющимися каплями-искрами. Слева от других ключей сжимается в узкий 忄."}, {"id": 62, "char": "戈", "alt": [], "pinyin": "gē", "meaning": "копье; клевец", "mnemonic": "Длинное наклонное древко с крюком-остриём — копьё-алебарда воина."}, {"id": 63, "char": "户", "alt": ["戸", "戶"], "pinyin": "hù", "meaning": "двор", "mnemonic": "Дверная створка с косяком — одна половинка ворот дома."}, {"id": 64, "char": "手", "alt": ["扌", "龵"], "pinyin": "shǒu", "meaning": "рука", "mnemonic": "Растопыренные пальцы над ладонью — кисть руки. Слева от других ключей сжимается в узкий 扌."}, {"id": 65, "char": "支", "alt": [], "pinyin": "zhī", "meaning": "ветка", "mnemonic": "Рука, держащая небольшую веточку снизу — рука, отламывающая ветку."}, {"id": 66, "char": "攴", "alt": ["攵"], "pinyin": "pū", "meaning": "бить; ударять", "mnemonic": "Рука с палкой, замахивающаяся сверху, — жест удара."}, {"id": 67, "char": "文", "alt": [], "pinyin": "wén", "meaning": "текст; письмена", "mnemonic": "Крест-накрест штрихи под крышей — узор, вырезанный как знак, начало письменности."}, {"id": 68, "char": "斗", "alt": [], "pinyin": "dǒu", "meaning": "ковш; хлебная мерка", "mnemonic": "Ручка и черпало сбоку — ковш для зачерпывания зерна."}, {"id": 69, "char": "斤", "alt": [], "pinyin": "jīn", "meaning": "топор", "mnemonic": "Вертикальное лезвие с боковой рукоятью — топор, воткнутый в колоду."}, {"id": 70, "char": "方", "alt": [], "pinyin": "fāng", "meaning": "квадрат; сторона", "mnemonic": "Крест и загнутый угол снизу — флаг на квадратном древке, указывающий сторону."}, {"id": 71, "char": "无", "alt": [], "pinyin": "wú", "meaning": "не; без", "mnemonic": "Похож на «небо» без верхней черты — чему-то не хватает верхушки, отсутствие."}, {"id": 72, "char": "日", "alt": [], "pinyin": "rì", "meaning": "солнце", "mnemonic": "Квадратик с чертой посередине — солнечный диск с пятном внутри."}, {"id": 73, "char": "曰", "alt": [], "pinyin": "yuē", "meaning": "говорить", "mnemonic": "Пошире и площе, чем 日, с короткой чертой внутри — открытый рот, произносящий слова."}, {"id": 74, "char": "月", "alt": [], "pinyin": "yuè", "meaning": "луна", "mnemonic": "Прямоугольник с двумя горизонтальными штрихами внутри — окно-полумесяц, видны фазы."}, {"id": 75, "char": "木", "alt": [], "pinyin": "mù", "meaning": "дерево", "mnemonic": "Ствол-вертикаль, ветви в стороны, корни вниз — силуэт дерева."}, {"id": 76, "char": "欠", "alt": [], "pinyin": "qiàn", "meaning": "недоставать", "mnemonic": "Человек, склонившийся вперёд с открытым ртом, — зевает, ему чего-то не хватает."}, {"id": 77, "char": "止", "alt": [], "pinyin": "zhǐ", "meaning": "стопа; останавливаться", "mnemonic": "Три коротких черты — отпечаток ступни, остановившейся на месте."}, {"id": 78, "char": "歹", "alt": ["歺"], "pinyin": "dǎi", "meaning": "злой; плохой", "mnemonic": "Обломанная кость с зазубриной — что-то испорченное, дурной знак."}, {"id": 79, "char": "殳", "alt": [], "pinyin": "shū", "meaning": "бамбуковая пика", "mnemonic": "Рука внизу, держащая древко пики сверху."}, {"id": 80, "char": "毋", "alt": [], "pinyin": "wú", "meaning": "нет; нельзя", "mnemonic": "Похож на иероглиф «мать», перечёркнутый диагональю, — запрещающий знак «нельзя»."}, {"id": 81, "char": "比", "alt": [], "pinyin": "bǐ", "meaning": "сравнивать", "mnemonic": "Два одинаковых крючка рядом — два человечка, поставленных бок о бок для сравнения."}, {"id": 82, "char": "毛", "alt": [], "pinyin": "máo", "meaning": "шерсть; волосы", "mnemonic": "Изогнутая линия с торчащими волосками — клок пушистой шерсти."}, {"id": 83, "char": "氏", "alt": [], "pinyin": "shì", "meaning": "род; клан", "mnemonic": "Наклонный крюк с точкой сбоку — корень родового дерева, из которого растёт линия предков."}, {"id": 84, "char": "气", "alt": [], "pinyin": "qì", "meaning": "воздух; газ", "mnemonic": "Три горизонтальные волнистые черты — пар или дыхание, поднимающееся вверх."}, {"id": 85, "char": "水", "alt": ["氵", "氺"], "pinyin": "shuǐ", "meaning": "вода", "mnemonic": "Вертикальный поток с брызгами по бокам — струя воды. Слева от других ключей сжимается в 氵."}, {"id": 86, "char": "火", "alt": ["灬"], "pinyin": "huǒ", "meaning": "огонь", "mnemonic": "Языки пламени, расходящиеся от центра вверх, — костёр. Снизу иероглифов превращается в четыре точки 灬 — угольки."}, {"id": 87, "char": "爪", "alt": ["爫"], "pinyin": "zhǎo", "meaning": "когти", "mnemonic": "Три загнутых штриха сверху — коготь хищной птицы, вцепившийся в добычу."}, {"id": 88, "char": "父", "alt": [], "pinyin": "fù", "meaning": "отец", "mnemonic": "Две скрещенные палки в верхней части — рука отца с орудием труда, символ главы семьи."}, {"id": 89, "char": "爻", "alt": [], "pinyin": "yáo", "meaning": "воздействие; влияние", "mnemonic": "Два скрещённых Х друг над другом — гадательные палочки, пересекающиеся линии судьбы."}, {"id": 90, "char": "爿", "alt": ["丬"], "pinyin": "qiáng", "meaning": "доска; кровать", "mnemonic": "Половинка дерева 木 в зеркальном отражении — доска, распиленная пополам."}, {"id": 91, "char": "片", "alt": [], "pinyin": "piàn", "meaning": "карточка; щепка", "mnemonic": "Другая половинка дерева 木 — тонкая щепка или карточка."}, {"id": 92, "char": "牙", "alt": [], "pinyin": "yá", "meaning": "зуб", "mnemonic": "Изогнутый клык с корнем — острый зуб животного."}, {"id": 93, "char": "牛", "alt": ["牜", "⺧"], "pinyin": "niú", "meaning": "корова; бык", "mnemonic": "Крест с рогами наверху — голова быка с раскинутыми рогами."}, {"id": 94, "char": "犬", "alt": ["犭"], "pinyin": "quǎn", "meaning": "собака", "mnemonic": "Похож на 大 с дополнительной точкой-хвостом — бегущий пёс. Слева от других ключей сжимается в 犭."}, {"id": 95, "char": "玄", "alt": [], "pinyin": "xuán", "meaning": "темный; тайный", "mnemonic": "Скрученная нить, уходящая в глубину, — моток, скрытый в темноте, тайна."}, {"id": 96, "char": "玉", "alt": [], "pinyin": "yù", "meaning": "яшма", "mnemonic": "Три горизонтали на вертикали с точкой сбоку — нанизанные на нить нефритовые пластинки."}, {"id": 97, "char": "瓜", "alt": [], "pinyin": "guā", "meaning": "дыня; тыква", "mnemonic": "Изогнутый стебель, обвивающий круглый плод, — плеть тыквы с самой тыквой."}, {"id": 98, "char": "瓦", "alt": [], "pinyin": "wǎ", "meaning": "черепица", "mnemonic": "Волнистая изогнутая линия — ряд уложенных внахлёст черепиц на крыше."}, {"id": 99, "char": "甘", "alt": [], "pinyin": "gān", "meaning": "сладкий", "mnemonic": "Квадрат с чертой посередине, приземистей, чем 日, — рот, в котором держат что-то сладкое."}, {"id": 100, "char": "生", "alt": [], "pinyin": "shēng", "meaning": "рождаться; сырой", "mnemonic": "Росток, пробивающийся сквозь линию земли, — растение появляется на свет."}, {"id": 101, "char": "用", "alt": ["甩"], "pinyin": "yòng", "meaning": "применять; использовать", "mnemonic": "Прямоугольник с внутренней перегородкой — инструмент, который берут в дело."}, {"id": 102, "char": "田", "alt": [], "pinyin": "tián", "meaning": "поле", "mnemonic": "Квадрат, разделённый крестом на четыре части, — вид на поля сверху, разгороженные межами."}, {"id": 103, "char": "疋", "alt": ["⺪"], "pinyin": "pǐ", "meaning": "нога; колено", "mnemonic": "Похож на 足 без квадратной «стопы» сверху — согнутая в колене нога."}, {"id": 104, "char": "疒", "alt": [], "pinyin": "chuáng", "meaning": "болезнь", "mnemonic": "Точка-крыша и наклонная «постель» — человек, лежащий больным в постели."}, {"id": 105, "char": "癶", "alt": [], "pinyin": "bō", "meaning": "ноги врозь", "mnemonic": "Две симметрично расходящиеся черты — ступни, поставленные в стороны, перед прыжком."}, {"id": 106, "char": "白", "alt": [], "pinyin": "bái", "meaning": "белый", "mnemonic": "Квадрат 日 с чёрточкой-лучом наверху — сияющий, побелевший от света диск."}, {"id": 107, "char": "皮", "alt": [], "pinyin": "pí", "meaning": "кожа; шкура", "mnemonic": "Рука, стягивающая шкуру с чего-то, — процесс сдирания кожи."}, {"id": 108, "char": "皿", "alt": [], "pinyin": "mǐn", "meaning": "блюдо; посуда", "mnemonic": "Широкая чаша на ножке — блюдо, стоящее на подставке."}, {"id": 109, "char": "目", "alt": [], "pinyin": "mù", "meaning": "глаз", "mnemonic": "Вытянутый прямоугольник с двумя чертами внутри — глаз с веком и зрачком, повёрнутый вертикально."}, {"id": 110, "char": "矛", "alt": [], "pinyin": "máo", "meaning": "копье", "mnemonic": "Длинное древко с зазубренным наконечником сверху — боевое копьё."}, {"id": 111, "char": "矢", "alt": [], "pinyin": "shǐ", "meaning": "стрела", "mnemonic": "Наконечник, древко и оперение — целая стрела от острия до хвостовых перьев."}, {"id": 112, "char": "石", "alt": [], "pinyin": "shí", "meaning": "камень", "mnemonic": "Обрыв и квадрат под ним — глыба камня, лежащая у подножия скалы."}, {"id": 113, "char": "示", "alt": ["礻"], "pinyin": "shì", "meaning": "алтарь; демонстрировать", "mnemonic": "Крыша-точка и стол с раскинутыми боковинами — жертвенный алтарь. Слева сжимается в 礻."}, {"id": 114, "char": "禸", "alt": [], "pinyin": "róu", "meaning": "след зверя", "mnemonic": "Изогнутая линия с точкой внутри — отпечаток лапы на земле."}, {"id": 115, "char": "禾", "alt": [], "pinyin": "hé", "meaning": "хлеб на корню", "mnemonic": "Дерево с наклонённым колосом наверху — стебель злака, гнущийся под тяжестью зерна."}, {"id": 116, "char": "穴", "alt": [], "pinyin": "xué", "meaning": "пещера", "mnemonic": "Крыша, но с расходящимися ножками снизу, — вход в пещеру, свод и открытый проём."}, {"id": 117, "char": "立", "alt": [], "pinyin": "lì", "meaning": "стоять", "mnemonic": "Фигура человека на горизонтальной черте-земле — твёрдо стоит на ногах."}, {"id": 118, "char": "竹", "alt": ["⺮"], "pinyin": "zhú", "meaning": "бамбук", "mnemonic": "Два стебля с листьями-веточками наверху — заросли бамбука."}, {"id": 119, "char": "米", "alt": [], "pinyin": "mǐ", "meaning": "рис", "mnemonic": "Крест с четырьмя точками по диагоналям — рассыпанные рисовые зёрнышки."}, {"id": 120, "char": "纟", "alt": ["糹", "糸"], "pinyin": "mì", "meaning": "нить; шелк", "mnemonic": "Спутанный моток, сжатый в петли, — клубок шёлковой нити."}, {"id": 121, "char": "缶", "alt": [], "pinyin": "fǒu", "meaning": "глиняная посуда; керамика", "mnemonic": "Крышка сверху и широкое тело сосуда — глиняный кувшин с крышкой."}, {"id": 122, "char": "网", "alt": ["罒", "罓", "⺳"], "pinyin": "wǎng", "meaning": "сеть", "mnemonic": "Переплетённые линии внутри рамки — ячейки рыболовной сети."}, {"id": 123, "char": "羊", "alt": ["⺶", "⺷"], "pinyin": "yáng", "meaning": "баран", "mnemonic": "Крест с расходящимися рогами наверху — голова барана с закрученными рогами."}, {"id": 124, "char": "羽", "alt": [], "pinyin": "yǔ", "meaning": "перья; крылья", "mnemonic": "Два одинаковых крыла бок о бок — пара птичьих крыльев."}, {"id": 125, "char": "老", "alt": ["耂"], "pinyin": "lǎo", "meaning": "старый", "mnemonic": "Сгорбленная фигура, опирающаяся на палку внизу, — старик с тростью."}, {"id": 126, "char": "而", "alt": [], "pinyin": "ér", "meaning": "а; но", "mnemonic": "Свисающие вниз чёрточки, как борода, — символ переходного «а всё же»."}, {"id": 127, "char": "耒", "alt": [], "pinyin": "lěi", "meaning": "плуг; соха", "mnemonic": "Дерево с зубцами наверху — деревянная соха для вспашки."}, {"id": 128, "char": "耳", "alt": [], "pinyin": "ěr", "meaning": "ухо", "mnemonic": "Изогнутая раковина с внутренними завитками — форма человеческого уха сбоку."}, {"id": 129, "char": "聿", "alt": ["⺻", "肀"], "pinyin": "yù", "meaning": "кисть для письма", "mnemonic": "Рука, держащая вертикальную кисть с ворсом внизу."}, {"id": 130, "char": "肉", "alt": [], "pinyin": "ròu", "meaning": "мясо", "mnemonic": "Прямоугольник с двумя косыми штрихами внутри — кусок мяса с прожилками жира."}, {"id": 131, "char": "臣", "alt": [], "pinyin": "chén", "meaning": "подданный", "mnemonic": "Вытянутый прямоугольный глаз, склонённый набок, — подчинённый смотрит на господина снизу вверх."}, {"id": 132, "char": "自", "alt": [], "pinyin": "zì", "meaning": "сам; нос", "mnemonic": "Квадрат-переносица с чёрточками — форма носа спереди (жест «это я» — указывали на нос)."}, {"id": 133, "char": "至", "alt": [], "pinyin": "zhì", "meaning": "достигать; прибывать", "mnemonic": "Стрела, воткнувшаяся в землю, — долетела и достигла цели."}, {"id": 134, "char": "臼", "alt": [], "pinyin": "jiù", "meaning": "ступа", "mnemonic": "Широкая чаша с бортиками внутри — каменная ступа для толчения зерна."}, {"id": 135, "char": "舌", "alt": [], "pinyin": "shé", "meaning": "язык", "mnemonic": "Рот с высунутым наружу штрихом сверху — язык, торчащий изо рта."}, {"id": 136, "char": "舛", "alt": [], "pinyin": "chuǎn", "meaning": "ошибка; неудача", "mnemonic": "Две ноги, шагающие в разные стороны, — сбились с шага, разлад."}, {"id": 137, "char": "舟", "alt": [], "pinyin": "zhōu", "meaning": "лодка; корабль", "mnemonic": "Вытянутый корпус с бортами и веслом-чертой внутри — лодка сбоку."}, {"id": 138, "char": "艮", "alt": [], "pinyin": "gēn", "meaning": "твердый; крепкий", "mnemonic": "Глаз на ногах — упёрся взглядом и стоит на своём, твёрдо."}, {"id": 139, "char": "色", "alt": [], "pinyin": "sè", "meaning": "цвет", "mnemonic": "Человек над коленопреклонённой фигурой — оттенок лица, выражение, отсюда «цвет»."}, {"id": 140, "char": "艸", "alt": ["艹"], "pinyin": "cǎo", "meaning": "трава", "mnemonic": "Два маленьких ростка рядом — пучок травы. Сверху иероглифов сжимается в 艹."}, {"id": 141, "char": "虍", "alt": [], "pinyin": "hū", "meaning": "тигр", "mnemonic": "Изогнутая полоса с чертами-полосками наверху — тигровый узор и голова хищника."}, {"id": 142, "char": "虫", "alt": [], "pinyin": "chóng", "meaning": "насекомое; ядовитая змея", "mnemonic": "Маленькая головка и закрученный хвост — червяк, свернувшийся кольцом."}, {"id": 143, "char": "血", "alt": [], "pinyin": "xuè", "meaning": "кровь", "mnemonic": "Чаша с каплей наверху — сосуд, в который стекает капля крови."}, {"id": 144, "char": "行", "alt": [], "pinyin": "xíng", "meaning": "идти; ряд", "mnemonic": "Два одинаковых полу-креста по бокам — перекрёсток, где расходятся дороги."}, {"id": 145, "char": "衣", "alt": ["衤"], "pinyin": "yī", "meaning": "одежда", "mnemonic": "Ворот, запахивающиеся полы и подол — силуэт халата. Слева сжимается в 衤."}, {"id": 146, "char": "襾", "alt": ["西", "覀"], "pinyin": "yà", "meaning": "накрывать; крышка", "mnemonic": "Широкая крышка над квадратом — колпак, плотно накрывающий предмет сверху."}, {"id": 147, "char": "见", "alt": ["見"], "pinyin": "jiàn", "meaning": "видеть; смотреть", "mnemonic": "Глаз на ногах человека — тот, кто смотрит и видит."}, {"id": 148, "char": "角", "alt": [], "pinyin": "jiǎo", "meaning": "рог; угол", "mnemonic": "Изогнутый ребристый рог животного — витой бараний рог."}, {"id": 149, "char": "讠", "alt": ["訁", "言"], "pinyin": "yán", "meaning": "речь", "mnemonic": "Рот сверху и волны звука снизу — слова, выходящие изо рта."}, {"id": 150, "char": "谷", "alt": [], "pinyin": "gǔ", "meaning": "долина", "mnemonic": "Линии-склоны, стекающиеся к устью, — вид на долину, куда сходятся два склона."}, {"id": 151, "char": "豆", "alt": [], "pinyin": "dòu", "meaning": "бобы", "mnemonic": "Чаша на высокой ножке — сосуд для подношения, по форме напоминает стручок."}, {"id": 152, "char": "豕", "alt": [], "pinyin": "shǐ", "meaning": "свинья", "mnemonic": "Круглое тело на коротких ножках с хвостиком — силуэт свиньи сбоку."}, {"id": 153, "char": "豸", "alt": [], "pinyin": "zhì", "meaning": "единорог", "mnemonic": "Похож на 豕, но вытянутее и с изогнутой спиной, — хищник, готовящийся к прыжку."}, {"id": 154, "char": "贝", "alt": ["貝"], "pinyin": "bèi", "meaning": "раковина; сокровище", "mnemonic": "Ромб с двумя ножками-усиками снизу — раковина каури, древние деньги."}, {"id": 155, "char": "赤", "alt": [], "pinyin": "chì", "meaning": "красный", "mnemonic": "Большой огонь под ногами — жаркое пламя, отсюда цвет «красный»."}, {"id": 156, "char": "走", "alt": ["赱"], "pinyin": "zǒu", "meaning": "ходить; уходить", "mnemonic": "Наклонённая фигура человека с шагающей ногой внизу — бегущий силуэт."}, {"id": 157, "char": "足", "alt": ["⻊"], "pinyin": "zú", "meaning": "нога", "mnemonic": "Квадрат-колено и согнутая ступня под ним — нога целиком, от колена до стопы."}, {"id": 158, "char": "身", "alt": [], "pinyin": "shēn", "meaning": "тело (человека)", "mnemonic": "Изогнутый живот сбоку — силуэт человеческого тела."}, {"id": 159, "char": "车", "alt": ["車"], "pinyin": "chē", "meaning": "телега; повозка", "mnemonic": "Прямоугольный кузов на оси-вертикали — повозка с колесом сверху."}, {"id": 160, "char": "辛", "alt": [], "pinyin": "xīn", "meaning": "горький", "mnemonic": "Вертикаль, пронзающая несколько горизонталей, — игла или клеймо, горькая тяжёлая доля."}, {"id": 161, "char": "辰", "alt": [], "pinyin": "chén", "meaning": "время (циклический знак)", "mnemonic": "Изогнутая раковина-панцирь с торчащими усиками — древний символ циклического знака."}, {"id": 162, "char": "辵", "alt": ["辶", "⻌", "⻍"], "pinyin": "chuò", "meaning": "идти быстро", "mnemonic": "Нога на дороге-волне — шаг вперемешку с бегом. В составе иероглифов сжимается в 辶."}, {"id": 163, "char": "邑", "alt": ["阝"], "pinyin": "yì", "meaning": "город", "mnemonic": "Квадрат-стены на коленопреклонённой фигуре — поселение с оградой. Справа сжимается в 阝."}, {"id": 164, "char": "酉", "alt": [], "pinyin": "yǒu", "meaning": "сосуд для вина", "mnemonic": "Кувшин с узким горлышком и чертой-меткой уровня жидкости внутри."}, {"id": 165, "char": "釆", "alt": [], "pinyin": "biàn", "meaning": "различать; сортировать", "mnemonic": "Точки-зёрна, рассыпанные вокруг стебля, — просеивают и различают зёрна одно от другого."}, {"id": 166, "char": "里", "alt": [], "pinyin": "lǐ", "meaning": "верста; деревня", "mnemonic": "Поле над землёй — засеянная земля, единица измерения пути между сёлами."}, {"id": 167, "char": "钅", "alt": ["釒", "金"], "pinyin": "jīn", "meaning": "золото; металл", "mnemonic": "Крыша-крышка над двумя точками-слитками — драгоценный металл в сундуке."}, {"id": 168, "char": "长", "alt": ["镸", "長"], "pinyin": "cháng", "meaning": "длинный; старший", "mnemonic": "Изогнутая линия с длинным хвостом-чертой внизу — развевающиеся длинные волосы."}, {"id": 169, "char": "门", "alt": ["門"], "pinyin": "mén", "meaning": "ворота", "mnemonic": "Две одинаковые створки рядом — распашные ворота, симметричные половинки."}, {"id": 170, "char": "阜", "alt": ["阝"], "pinyin": "fù", "meaning": "холм", "mnemonic": "Ступенчатая линия, поднимающаяся зигзагом вверх, — тропинка, взбирающаяся на холм."}, {"id": 171, "char": "隶", "alt": [], "pinyin": "lì", "meaning": "достигать; поймать", "mnemonic": "Рука сверху, хватающая хвост животного снизу, — погоня и поимка добычи."}, {"id": 172, "char": "隹", "alt": [], "pinyin": "zhuī", "meaning": "короткохвостая птица", "mnemonic": "Квадратное тельце с чертами-перьями сбоку — коротышка-птица, компактный силуэт."}, {"id": 173, "char": "雨", "alt": [], "pinyin": "yǔ", "meaning": "дождь", "mnemonic": "Крыша-туча наверху и капли-точки, падающие вниз, — дождь льётся из тучи."}, {"id": 174, "char": "青", "alt": ["靑"], "pinyin": "qīng", "meaning": "синий; зелёный", "mnemonic": "Росток над колодцем — свежая зелень, растущая у воды."}, {"id": 175, "char": "非", "alt": [], "pinyin": "fēi", "meaning": "не быть; отрицать", "mnemonic": "Два зеркальных крыла, расходящихся в разные стороны, — противоположности, отрицающие друг друга."}, {"id": 176, "char": "面", "alt": ["靣"], "pinyin": "miàn", "meaning": "лицо", "mnemonic": "Квадрат-контур лица с чертами глаз и носа внутри — портрет анфас."}, {"id": 177, "char": "革", "alt": [], "pinyin": "gé", "meaning": "сырая кожа", "mnemonic": "Крестовина сверху и растянутая шкура снизу — кожа, натянутая на раму для выделки."}, {"id": 178, "char": "韦", "alt": ["韋"], "pinyin": "wéi", "meaning": "выделанная кожа", "mnemonic": "Плетёный ремешок, обёрнутый вокруг чего-то, — мягкая, уже обработанная кожа."}, {"id": 179, "char": "韭", "alt": [], "pinyin": "jiǔ", "meaning": "дикий чеснок", "mnemonic": "Ряд ростков над землёй — пучок стрелок чеснока, торчащих из грядки."}, {"id": 180, "char": "音", "alt": [], "pinyin": "yīn", "meaning": "звук", "mnemonic": "Рот с чертой-язычком наверху — звук, вырывающийся изо рта, как из свистка."}, {"id": 181, "char": "页", "alt": ["頁"], "pinyin": "yè", "meaning": "страница", "mnemonic": "Голова на ножках — «голова» книги, то, что видно сверху при перелистывании."}, {"id": 182, "char": "风", "alt": ["風"], "pinyin": "fēng", "meaning": "ветер", "mnemonic": "Изогнутый парус внутри рамки — ветер, надувающий парус."}, {"id": 183, "char": "飞", "alt": ["飛"], "pinyin": "fēi", "meaning": "летать", "mnemonic": "Расправленное крыло с загнутым кончиком — птица в полёте, одно крыло видно сбоку."}, {"id": 184, "char": "饣", "alt": ["飠", "食"], "pinyin": "shí", "meaning": "еда; пища", "mnemonic": "Крыша-миска над чертой-палочками — миска с едой и парой палочек."}, {"id": 185, "char": "首", "alt": [], "pinyin": "shǒu", "meaning": "голова; глава", "mnemonic": "Волосы-чёрточки наверху и глаз-квадрат снизу — голова с причёской."}, {"id": 186, "char": "香", "alt": [], "pinyin": "xiāng", "meaning": "аромат", "mnemonic": "Колос над солнцем — созревающее на солнце зерно источает аромат."}, {"id": 187, "char": "马", "alt": ["馬"], "pinyin": "mǎ", "meaning": "лошадь", "mnemonic": "Три горизонтали, пересечённые изогнутой гривой, — стремительный силуэт скачущей лошади."}, {"id": 188, "char": "骨", "alt": [], "pinyin": "gǔ", "meaning": "кости", "mnemonic": "Череп-рамка над куском мяса — кость, обросшая плотью."}, {"id": 189, "char": "高", "alt": ["髙"], "pinyin": "gāo", "meaning": "высокий", "mnemonic": "Крыша, окно и подставка друг над другом в несколько этажей — башня, устремлённая ввысь."}, {"id": 190, "char": "髟", "alt": [], "pinyin": "biāo", "meaning": "волосы", "mnemonic": "Длинная фигура с развевающимися прядями сбоку — густая шевелюра."}, {"id": 191, "char": "斗", "alt": ["鬥"], "pinyin": "dòu", "meaning": "борьба", "mnemonic": "Похож на ключ «ковш», но здесь два ковша сталкиваются в споре."}, {"id": 192, "char": "鬯", "alt": [], "pinyin": "chàng", "meaning": "жертвенное вино", "mnemonic": "Чаша-сосуд с ложкой внутри — вино, разлитое для ритуала."}, {"id": 193, "char": "鬲", "alt": [], "pinyin": "lì", "meaning": "кувшин; трипод", "mnemonic": "Крышка над телом сосуда на трёх толстых ножках — древний кухонный треножник."}, {"id": 194, "char": "鬼", "alt": [], "pinyin": "guǐ", "meaning": "черт", "mnemonic": "Большая круглая голова на изогнутых ножках с хвостиком — жуткая фигура призрака."}, {"id": 195, "char": "鱼", "alt": ["魚"], "pinyin": "yú", "meaning": "рыба", "mnemonic": "Голова, чешуйчатое туловище и хвостик-плавники внизу — силуэт рыбы."}, {"id": 196, "char": "鸟", "alt": ["鳥"], "pinyin": "niǎo", "meaning": "птица", "mnemonic": "Изогнутая голова с клювом, крыло-хвост, точка-глаз — птица сбоку."}, {"id": 197, "char": "卤", "alt": ["鹵"], "pinyin": "lǔ", "meaning": "соляная мель; солончак", "mnemonic": "Ромб с точками внутри — кристаллы соли, выступившие на земле."}, {"id": 198, "char": "鹿", "alt": [], "pinyin": "lù", "meaning": "олень", "mnemonic": "Ветвистые рога наверху и стройные ножки внизу — олень с раскидистыми рогами."}, {"id": 199, "char": "麦", "alt": ["麥"], "pinyin": "mài", "meaning": "пшеница", "mnemonic": "Росток над шагающей ногой — колос, который убирают, «приходит» урожай."}, {"id": 200, "char": "麻", "alt": [], "pinyin": "má", "meaning": "конопля", "mnemonic": "Навес, под которым сушатся пучки стеблей, — конопляные волокна под крышей сарая."}, {"id": 201, "char": "黃", "alt": [], "pinyin": "huáng", "meaning": "желтый", "mnemonic": "Поле над огнём-светом — цвет спелого поля, жёлтый как зерно."}, {"id": 202, "char": "黍", "alt": [], "pinyin": "shǔ", "meaning": "просо", "mnemonic": "Стебель с рассыпанными вокруг зёрнышками-точками — метёлка проса на ветру."}, {"id": 203, "char": "黑", "alt": [], "pinyin": "hēi", "meaning": "черный", "mnemonic": "Окно-дымоход с четырьмя точками-угольками внизу — сажа над очагом."}, {"id": 204, "char": "黹", "alt": [], "pinyin": "zhǐ", "meaning": "вышивка", "mnemonic": "Симметричный узор из перекрещенных стежков — орнамент, вышитый нитью."}, {"id": 205, "char": "黾", "alt": ["黽"], "pinyin": "mǐn", "meaning": "лягушка; жаба", "mnemonic": "Круглое тело на растопыренных лапках — приземистая лягушка."}, {"id": 206, "char": "鼎", "alt": [], "pinyin": "dǐng", "meaning": "бронзовый треножник", "mnemonic": "Широкая чаша на трёх толстых ногах — бронзовый ритуальный котёл."}, {"id": 207, "char": "鼓", "alt": [], "pinyin": "gǔ", "meaning": "барабан", "mnemonic": "Стойка-подставка и рука с колотушкой сбоку — барабан, в который бьют."}, {"id": 208, "char": "鼠", "alt": [], "pinyin": "shǔ", "meaning": "мышь", "mnemonic": "Острые зубки наверху, длинный хвост внизу — юркая мышь."}, {"id": 209, "char": "鼻", "alt": [], "pinyin": "bí", "meaning": "нос", "mnemonic": "Поле над «носом» и опорой снизу — крупный нос, вид спереди."}, {"id": 210, "char": "齐", "alt": ["齊"], "pinyin": "qí", "meaning": "ровный; одинаковый", "mnemonic": "Три одинаковых ростка на одном уровне — колосья, выровнявшиеся в поле."}, {"id": 211, "char": "齿", "alt": ["齒"], "pinyin": "chǐ", "meaning": "зубы", "mnemonic": "Квадрат-рот с чёрточками-зубами внутри — ровный ряд зубов во рту."}, {"id": 212, "char": "龙", "alt": ["龍"], "pinyin": "lóng", "meaning": "дракон", "mnemonic": "Изогнутое тело с гребнем и хвостом, летящее по спирали, — извивающийся силуэт дракона."}, {"id": 213, "char": "龟", "alt": ["龜"], "pinyin": "guī", "meaning": "черепаха", "mnemonic": "Овальный панцирь с торчащей головой и лапками — черепаха сверху."}, {"id": 214, "char": "龠", "alt": [], "pinyin": "yuè", "meaning": "флейта", "mnemonic": "Несколько скреплённых вместе трубочек — связка бамбуковых свирелей пан-флейты."}];
+
+  var DECK_RANGES = [[1,30],[31,60],[61,90],[91,120],[121,150],[151,180],[181,210],[211,214]];
+  var DECKS = DECK_RANGES.map(function (r, i) {
+    var keys = ALL_KEYS.filter(function (k) { return k.id >= r[0] && k.id <= r[1]; });
+    return { id: "d" + (i + 1), range: r, label: r[0] + "–" + r[1], keys: keys };
+  });
+
+  var STORE_KEY = "radicals-progress-v2";
+
+  function loadAll() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return {};
+  }
+  var ALL_STATE = loadAll();
+
+  function saveAll() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(ALL_STATE)); } catch (e) {}
+  }
+
+  function deckState(id) {
+    if (!ALL_STATE[id]) ALL_STATE[id] = { cell: {}, roundsDone: 0 };
+    return ALL_STATE[id];
+  }
+
+  var activeDeck = DECKS[0];
+  var KEYS = activeDeck.keys;
+  var state = deckState(activeDeck.id);
+
+  function setCell(id, val) {
+    state.cell[id] = val;
+    saveAll();
+    renderDeckGrid();
+  }
+
+  function renderDeckGrid() {
+    var grid = document.getElementById("deckGrid");
+    grid.style.gridTemplateColumns = "repeat(" + Math.min(10, KEYS.length) + ", 1fr)";
+    grid.innerHTML = "";
+    KEYS.forEach(function (k) {
+      var d = document.createElement("div");
+      d.className = "deck-cell";
+      var s = state.cell[k.id] || "new";
+      d.setAttribute("data-state", s);
+      d.title = k.id + ". " + k.char + " — " + k.meaning;
+      grid.appendChild(d);
+    });
+  }
+
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll(".screen").forEach(function (s) { s.classList.remove("active"); });
+    document.getElementById(id).classList.add("active");
+  }
+
+  // ---------- simple ink canvas (shared logic) ----------
+  function setupCanvas(canvas) {
+    var ctx = canvas.getContext("2d");
+    var drawing = false;
+    var last = null;
+
+    function resize() {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 5;
+      var inkColor = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();
+      ctx.strokeStyle = inkColor || "#23262A";
+    }
+    window.addEventListener("resize", resize);
+
+    function pos(e) {
+      var rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    canvas.addEventListener("pointerdown", function (e) {
+      drawing = true;
+      canvas.setPointerCapture(e.pointerId);
+      last = pos(e);
+    });
+    canvas.addEventListener("pointermove", function (e) {
+      if (!drawing) return;
+      var p = pos(e);
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      last = p;
+    });
+    function stop() { drawing = false; }
+    canvas.addEventListener("pointerup", stop);
+    canvas.addEventListener("pointerleave", stop);
+    canvas.addEventListener("pointercancel", stop);
+
+    return {
+      clear: function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      },
+      resize: resize
+    };
+  }
+
+  var studyCanvasApi = setupCanvas(document.getElementById("studyCanvas"));
+  var drillCanvasApi = setupCanvas(document.getElementById("drillCanvas"));
+
+  // ---------- ROUND 1: study ----------
+  var studyIdx = 0;
+
+  function renderStudy() {
+    var k = KEYS[studyIdx];
+    document.getElementById("studyProgress").textContent = "Карточка " + (studyIdx + 1) + " / " + KEYS.length;
+    document.getElementById("studyChar").textContent = k.char;
+    document.getElementById("studyAlt").textContent = k.alt.length ? "также встречается как: " + k.alt.join("  ") : " ";
+    document.getElementById("studyPinyin").textContent = k.pinyin;
+    document.getElementById("studyMeaning").textContent = k.id + ". " + k.meaning;
+    document.getElementById("studyMnemonic").textContent = k.mnemonic;
+    studyCanvasApi.resize();
+    studyCanvasApi.clear();
+    document.getElementById("studyPrev").disabled = studyIdx === 0;
+    document.getElementById("studyNext").textContent = studyIdx === KEYS.length - 1 ? "завершить тур →" : "дальше →";
+    setCell(k.id, state.cell[k.id] && state.cell[k.id] !== "new" ? state.cell[k.id] : "studied");
+  }
+
+  document.getElementById("btnStartRound1").addEventListener("click", function () {
+    studyIdx = 0;
+    showScreen("screen-study");
+    renderStudy();
+  });
+
+  document.getElementById("studyPrev").addEventListener("click", function () {
+    if (studyIdx > 0) { studyIdx--; renderStudy(); }
+  });
+
+  document.getElementById("studyNext").addEventListener("click", function () {
+    if (studyIdx < KEYS.length - 1) {
+      studyIdx++;
+      renderStudy();
+    } else {
+      if (state.roundsDone < 1) state.roundsDone = 1;
+      saveAll();
+      buildRoundTabs();
+      buildDeckTabs();
+      showScreen("screen-study-done");
+    }
+  });
+
+  document.getElementById("studyClear").addEventListener("click", studyCanvasApi.clear);
+
+  // ---------- ROUNDS 2-4: drill ----------
+  var drillQueue = [];
+  var drillIdx = 0;
+  var drillCorrect = 0;
+  var drillWeak = 0;
+  var drillWeakKeys = [];
+  var currentRound = 2;
+
+  function startDrill(roundNum) {
+    currentRound = roundNum;
+    drillQueue = shuffled(KEYS);
+    drillIdx = 0;
+    drillCorrect = 0;
+    drillWeak = 0;
+    drillWeakKeys = [];
+    showScreen("screen-drill");
+    renderDrill();
+    setActiveTab(roundNum);
+  }
+
+  function renderDrill() {
+    var k = drillQueue[drillIdx];
+    document.getElementById("drillProgress").textContent = "Ключ " + (drillIdx + 1) + " / " + drillQueue.length + " · тур " + currentRound;
+    document.getElementById("drillPrompt").innerHTML = "<strong>" + k.meaning + "</strong> — " + k.mnemonic;
+    document.getElementById("drillPinyin").textContent = k.pinyin;
+    document.getElementById("drillPinyin").style.visibility = "hidden";
+    document.getElementById("drillGhost").style.display = "none";
+    document.getElementById("drillGhost").textContent = k.char;
+    document.getElementById("gradeRow").style.display = "none";
+    drillCanvasApi.resize();
+    drillCanvasApi.clear();
+    updateDrillScore();
+  }
+
+  function updateDrillScore() {
+    document.getElementById("drillScore").innerHTML = "верно " + drillCorrect + " · <span class=\"miss\">повторить " + drillWeak + "</span>";
+  }
+
+  document.getElementById("drillClear").addEventListener("click", drillCanvasApi.clear);
+
+  document.getElementById("drillReveal").addEventListener("click", function () {
+    document.getElementById("drillGhost").style.display = "flex";
+    document.getElementById("drillPinyin").style.visibility = "visible";
+    document.getElementById("gradeRow").style.display = "flex";
+  });
+
+  function drillGrade(ok) {
+    var k = drillQueue[drillIdx];
+    if (ok) { drillCorrect++; setCell(k.id, "ok"); }
+    else { drillWeak++; drillWeakKeys.push(k); setCell(k.id, "weak"); }
+    updateDrillScore();
+    if (drillIdx < drillQueue.length - 1) {
+      drillIdx++;
+      renderDrill();
+    } else {
+      finishDrillRound();
+    }
+  }
+
+  document.getElementById("gradeOk").addEventListener("click", function () { drillGrade(true); });
+  document.getElementById("gradeWeak").addEventListener("click", function () { drillGrade(false); });
+
+  function finishDrillRound() {
+    if (state.roundsDone < currentRound) state.roundsDone = currentRound;
+    saveAll();
+    buildRoundTabs();
+    buildDeckTabs();
+
+    document.getElementById("drillDoneEyebrow").textContent = "Тур " + currentRound + " завершён";
+    document.getElementById("drillDoneStat").textContent = drillCorrect + " / " + drillQueue.length;
+    document.getElementById("drillDoneText").textContent = "написано верно с первого показа за этот тур";
+
+    var list = document.getElementById("weakList");
+    list.innerHTML = "";
+    if (drillWeakKeys.length) {
+      var label = document.createElement("p");
+      label.style.width = "100%";
+      label.style.margin = "0";
+      label.style.fontSize = "13px";
+      label.style.color = "var(--ink-soft)";
+      label.textContent = "Стоит повторить:";
+      list.appendChild(label);
+      drillWeakKeys.forEach(function (k) {
+        var c = document.createElement("span");
+        c.className = "chip";
+        c.textContent = k.char;
+        c.title = k.meaning;
+        list.appendChild(c);
+      });
+    } else {
+      var ok = document.createElement("p");
+      ok.style.margin = "0";
+      ok.style.color = "var(--jade)";
+      ok.textContent = "Все ключи этого тура написаны верно — отличный тур.";
+      list.appendChild(ok);
+    }
+
+    var nextBtn = document.getElementById("btnNextRound");
+    if (currentRound < 4) {
+      nextBtn.textContent = "Начать тур " + (currentRound + 1) + " →";
+      nextBtn.onclick = function () { startDrill(currentRound + 1); };
+    } else {
+      nextBtn.textContent = "К итогам →";
+      nextBtn.onclick = function () { showScreen("screen-all-done"); };
+    }
+    showScreen("screen-drill-done");
+  }
+
+  document.getElementById("btnStartRound2").addEventListener("click", function () { startDrill(2); });
+
+  // ---------- round tabs (within the active deck) ----------
+  function buildRoundTabs() {
+    var wrap = document.getElementById("roundTabs");
+    if (state.roundsDone < 1) { wrap.style.display = "none"; return; }
+    wrap.style.display = "flex";
+    wrap.innerHTML = "";
+    var defs = [
+      { n: 1, label: "Тур 1 · изучение" },
+      { n: 2, label: "Тур 2 · закрепление" },
+      { n: 3, label: "Тур 3 · закрепление" },
+      { n: 4, label: "Тур 4 · закрепление" }
+    ];
+    defs.forEach(function (d) {
+      var unlocked = d.n === 1 || state.roundsDone >= d.n - 1;
+      var btn = document.createElement("button");
+      btn.className = "round-tab";
+      btn.textContent = d.label;
+      btn.setAttribute("data-unlocked", unlocked ? "true" : "false");
+      if (!unlocked) btn.disabled = true;
+      btn.addEventListener("click", function () {
+        if (d.n === 1) { studyIdx = 0; showScreen("screen-study"); renderStudy(); setActiveTab(1); }
+        else { startDrill(d.n); }
+      });
+      wrap.appendChild(btn);
+    });
+    setActiveTab(currentRound);
+  }
+
+  function setActiveTab(n) {
+    var wrap = document.getElementById("roundTabs");
+    Array.prototype.forEach.call(wrap.children, function (btn, i) {
+      btn.setAttribute("aria-current", (i + 1) === n ? "true" : "false");
+    });
+  }
+
+  document.getElementById("btnRestartAll").addEventListener("click", function () { startDrill(2); });
+
+  // ---------- deck tabs (top-level: 8 blocks of the full 214) ----------
+  function buildDeckTabs() {
+    var wrap = document.getElementById("deckTabs");
+    wrap.innerHTML = "";
+    DECKS.forEach(function (d) {
+      var st = deckState(d.id);
+      var mark = st.roundsDone >= 4 ? " ✓" : (st.roundsDone > 0 ? " •" : "");
+      var btn = document.createElement("button");
+      btn.className = "round-tab";
+      btn.textContent = d.label + mark;
+      btn.title = "ключи " + d.label;
+      btn.setAttribute("data-unlocked", "true");
+      btn.setAttribute("aria-current", d.id === activeDeck.id ? "true" : "false");
+      btn.addEventListener("click", function () { switchDeck(d.id); });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function switchDeck(id) {
+    var found = DECKS.filter(function (d) { return d.id === id; })[0];
+    if (!found) return;
+    activeDeck = found;
+    KEYS = activeDeck.keys;
+    state = deckState(id);
+    studyIdx = 0;
+    currentRound = 2;
+    document.getElementById("deckRangeLabel").textContent = "Ключи " + activeDeck.label + " · один заход на изучение, три захода на закрепление";
+    document.getElementById("studyDoneText").textContent = "Все ключи блока " + activeDeck.label + " просмотрены. Теперь — туры на закрепление: значение и подсказка есть, а форму нужно вспомнить и написать самим.";
+    document.getElementById("allDoneText").textContent = "Ключи " + activeDeck.label + " закреплены. Прогресс по каждому сохранён выше — зелёный квадрат значит, что в последнем туре вы написали ключ верно по памяти, красный — что его стоит повторить в следующий раз.";
+    renderDeckGrid();
+    buildDeckTabs();
+    buildRoundTabs();
+    showScreen("screen-intro");
+  }
+
+  switchDeck(activeDeck.id);
+})();
+</script>
